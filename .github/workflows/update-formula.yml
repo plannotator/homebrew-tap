@@ -1,0 +1,55 @@
+name: Update formula
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "plannotator-tui version, e.g. 0.3.0"
+        required: true
+        type: string
+  repository_dispatch:
+    types: [plannotator-tui-release]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-formula
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve version
+        id: resolve
+        env:
+          # Read through env so the dispatch payload is never interpolated
+          # into the shell.
+          INPUT_VERSION: ${{ inputs.version }}
+          DISPATCH_VERSION: ${{ github.event.client_payload.version }}
+        run: |
+          version="${INPUT_VERSION:-$DISPATCH_VERSION}"
+          version="${version#v}"
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "refusing to render: invalid version '$version'" >&2
+            exit 1
+          fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+
+      - name: Render formula
+        run: ./scripts/render-formula.sh "${{ steps.resolve.outputs.version }}"
+
+      - name: Commit and push
+        run: |
+          if git diff --quiet -- Formula/plannotator-tui.rb; then
+            echo "formula already at ${{ steps.resolve.outputs.version }}; nothing to do"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/plannotator-tui.rb
+          git commit -m "plannotator-tui ${{ steps.resolve.outputs.version }}"
+          git push
