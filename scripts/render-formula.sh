@@ -38,48 +38,38 @@ cat > "$out" <<EOF
 class PlannotatorTui < Formula
   desc "Annotate Markdown in the terminal and send the review to your agent"
   homepage "https://github.com/plannotator/plannotator-tui"
-  version "${version}"
   license "MIT"
 
+  # Homebrew reads the version from the release URLs below.
   # sha256 values come from the SHA256SUMS asset of the matching release.
   on_macos do
     on_arm do
-      url "https://github.com/plannotator/plannotator-tui/releases/download/v#{version}/plannotator-tui-aarch64-apple-darwin"
+      url "https://github.com/plannotator/plannotator-tui/releases/download/v${version}/plannotator-tui-aarch64-apple-darwin"
       sha256 "${macos_arm}"
-
-      def install
-        bin.install "plannotator-tui-aarch64-apple-darwin" => "plannotator-tui"
-      end
     end
 
     on_intel do
-      url "https://github.com/plannotator/plannotator-tui/releases/download/v#{version}/plannotator-tui-x86_64-apple-darwin"
+      url "https://github.com/plannotator/plannotator-tui/releases/download/v${version}/plannotator-tui-x86_64-apple-darwin"
       sha256 "${macos_intel}"
-
-      def install
-        bin.install "plannotator-tui-x86_64-apple-darwin" => "plannotator-tui"
-      end
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/plannotator/plannotator-tui/releases/download/v#{version}/plannotator-tui-aarch64-unknown-linux-gnu"
+      url "https://github.com/plannotator/plannotator-tui/releases/download/v${version}/plannotator-tui-aarch64-unknown-linux-gnu"
       sha256 "${linux_arm}"
-
-      def install
-        bin.install "plannotator-tui-aarch64-unknown-linux-gnu" => "plannotator-tui"
-      end
     end
 
     on_intel do
-      url "https://github.com/plannotator/plannotator-tui/releases/download/v#{version}/plannotator-tui-x86_64-unknown-linux-gnu"
+      url "https://github.com/plannotator/plannotator-tui/releases/download/v${version}/plannotator-tui-x86_64-unknown-linux-gnu"
       sha256 "${linux_intel}"
-
-      def install
-        bin.install "plannotator-tui-x86_64-unknown-linux-gnu" => "plannotator-tui"
-      end
     end
+  end
+
+  def install
+    # The release asset is a bare binary, so exactly one
+    # plannotator-tui-<target> file is staged for this platform.
+    bin.install Dir["plannotator-tui-*"].fetch(0) => "plannotator-tui"
   end
 
   test do
