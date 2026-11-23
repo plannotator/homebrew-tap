@@ -7,25 +7,25 @@ class PlannotatorTui < Formula
   # sha256 values come from the SHA256SUMS asset of the matching release.
   on_macos do
     on_arm do
-      url "https://github.com/plannotator/plannotator-tui/releases/download/v0.10.0/plannotator-tui-aarch64-apple-darwin"
-      sha256 "b59243348601a6dc173f7b577aba8861eda815f4961c6ae7c062ecd3d74468a2"
+      url "https://github.com/plannotator/plannotator-tui/releases/download/v0.11.0/plannotator-tui-aarch64-apple-darwin"
+      sha256 "7757b8980db88fef20fe8e7b01701f4d2a5298f9ceb63fc87211e5a79140f5ae"
     end
 
     on_intel do
-      url "https://github.com/plannotator/plannotator-tui/releases/download/v0.10.0/plannotator-tui-x86_64-apple-darwin"
-      sha256 "b000400623d75b0273bff976f66813cb85d9cdc7504b870b7d6457018d82333a"
+      url "https://github.com/plannotator/plannotator-tui/releases/download/v0.11.0/plannotator-tui-x86_64-apple-darwin"
+      sha256 "445d35b9aaba65b9738be43c1f1caea78ce8dd81c64e96e2d795033b5e6166d1"
     end
   end
 
   on_linux do
     on_arm do
-      url "https://github.com/plannotator/plannotator-tui/releases/download/v0.10.0/plannotator-tui-aarch64-unknown-linux-gnu"
-      sha256 "c974e2d7b64365e21e02e5e91dcf321d45d9d062d9eee30b9b11880e79abe996"
+      url "https://github.com/plannotator/plannotator-tui/releases/download/v0.11.0/plannotator-tui-aarch64-unknown-linux-gnu"
+      sha256 "362dab310574c5efc531ae329ad08f7c5b57f4babb96df2e17bc28ed04eacf08"
     end
 
     on_intel do
-      url "https://github.com/plannotator/plannotator-tui/releases/download/v0.10.0/plannotator-tui-x86_64-unknown-linux-gnu"
-      sha256 "80c7ccf5ab8fedaca94e502521d085fca6760e1e7c04069ad3c4e06b4c7e03e3"
+      url "https://github.com/plannotator/plannotator-tui/releases/download/v0.11.0/plannotator-tui-x86_64-unknown-linux-gnu"
+      sha256 "92a19c4c50cbde846fb78a52b320eeea8332a74ff31a1648d560fcdc2fb3beda"
     end
   end
 
